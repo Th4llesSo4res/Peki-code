@@ -8,7 +8,7 @@
 <body>
   <div class="login-box">
     <h2>Login</h2>
-    <form>
+    <form id="loginForm">
       <label for="usuario">Usuário</label>
       <input type="text" id="usuario" name="usuario" required>
 
@@ -19,5 +19,21 @@
     </form>
     <a href="#">Esqueceu a senha?</a>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const usuario = document.getElementById('usuario').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+
+      if (usuario === '' || senha === '') {
+        alert('Por favor, preencha todos os campos!');
+      } else {
+        alert(Login realizado com sucesso!\nUsuário: ${usuario});
+        alert('Senha: ${senha}');
+      }
+    });
+  </script>
 </body>
 </html>
