@@ -2,38 +2,65 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Login + Tarefas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-box">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <label for="usuario">Usuário</label>
-      <input type="text" id="usuario" name="usuario" required>
+  <div class="container">
+    <!-- Login -->
+    <div class="login-box">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" name="usuario" required>
 
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" name="senha" required>
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required>
 
-      <button type="submit">login</button>
-    </form>
-    <a href="#">Esqueceu a senha?</a>
+        <button type="submit">login</button>
+      </form>
+      <a href="#">Esqueceu a senha?</a>
+    </div>
+
+    <!-- Tarefas estilo Notion -->
+    <div class="tasks-box">
+      <h2>Tarefas</h2>
+      <ul id="taskList"></ul>
+      <input type="text" id="taskInput" placeholder="Nova tarefa...">
+      <button onclick="addTask()">Adicionar</button>
+    </div>
   </div>
 
   <script>
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
-
       const usuario = document.getElementById('usuario').value.trim();
       const senha = document.getElementById('senha').value.trim();
-
-      if (usuario === '' || senha === '') {
+      if (!usuario || !senha) {
         alert('Por favor, preencha todos os campos!');
       } else {
         alert(Login realizado com sucesso!\nUsuário: ${usuario});
-        alert('Senha: ${senha}');
       }
     });
+
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const taskText = input.value.trim();
+      if (taskText === '') return;
+
+      const li = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+
+      const span = document.createElement('span');
+      span.textContent = taskText;
+
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      document.getElementById('taskList').appendChild(li);
+
+      input.value = '';
+    }
   </script>
 </body>
 </html>
