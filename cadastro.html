@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Cadastro</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,13 +18,14 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       padding: 30px;
-      width: 300px;
+      width: 320px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h2 {
       text-align: center;
       color: #006666;
     }
+    input[type="text"],
     input[type="email"],
     input[type="password"] {
       width: 100%;
@@ -45,10 +46,6 @@
     button:hover {
       background-color: #2a8191;
     }
-    .checkbox {
-      display: flex;
-      align-items: center;
-    }
     .footer {
       margin-top: 10px;
       text-align: center;
@@ -63,27 +60,34 @@
 </head>
 <body>
   <div class="container">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="contato@htmlecsspro.com" required>
-    <input type="password" id="senha" placeholder="1234" required>
-    <div class="checkbox">
-      <input type="checkbox" id="manter"> <label for="manter">Manter-me logado</label>
-    </div>
-    <button onclick="login()">Logar</button>
+    <h2>Cadastro</h2>
+    <input type="text" id="nome" placeholder="Seu nome completo" required>
+    <input type="email" id="email" placeholder="Seu e-mail" required>
+    <input type="password" id="senha" placeholder="Crie uma senha" required>
+    <input type="password" id="confirmarSenha" placeholder="Confirme a senha" required>
+    <button onclick="cadastrar()">Cadastrar</button>
     <div class="footer">
-      Ainda não tem conta? <a href="#" onclick="window.location.href='cadastro.html'">Cadastre-se</a>
+      Já tem uma conta? <a href="index.html">Login</a>
     </div>
   </div>  <script>
-    function login() {
+    function cadastrar() {
+      const nome = document.getElementById("nome").value;
       const email = document.getElementById("email").value;
       const senha = document.getElementById("senha").value;
+      const confirmarSenha = document.getElementById("confirmarSenha").value;
 
-      // Aqui você pode adicionar validação real com backend futuramente
-      if (email && senha) {
-        window.location.href = "todolist.html";
-      } else {
-        alert("Por favor, preencha todos os campos.");
+      if (!nome || !email || !senha || !confirmarSenha) {
+        alert("Preencha todos os campos.");
+        return;
       }
+      if (senha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      // Aqui você pode integrar com o backend futuramente
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "index.html";
     }
   </script></body>
 </html>

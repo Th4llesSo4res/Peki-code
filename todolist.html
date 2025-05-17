@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Avançada</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fb;
+    }
+    header {
+      background-color: #2b2d42;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .task-list {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .task-item:last-child { border-bottom: none; }
+    .task-item input[type="text"] {
+      flex: 1;
+      padding: 0.5rem;
+      margin-right: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .task-actions button {
+      margin-left: 5px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    .task-actions button.delete {
+      background: #e63946;
+    }
+    .add-task {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+    .add-task input {
+      flex: 1;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+    }
+    .add-task button {
+      background: #38b000;
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+    .filter-sort {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    select {
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minha To-Do List Avançada</h1>
+    <button onclick="logout()" style="background:#ef476f; padding:10px 20px; color:#fff; border:none; border-radius:5px; cursor:pointer;">Sair</button>
+  </header>
+  <div class="container">
+    <div class="filter-sort">
+      <select id="filter" onchange="filterTasks()">
+        <option value="all">Todas</option>
+        <option value="completed">Completas</option>
+        <option value="pending">Pendentes</option>
+      </select>
+      <select id="sort" onchange="sortTasks()">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+      </select>
+    </div><div class="add-task">
+  <input type="text" id="newTask" placeholder="Nova tarefa...">
+  <button onclick="addTask()">Adicionar</button>
+</div>
+
+<div class="task-list" id="taskList"></div>
+
+  </div>  <script>
+    let tasks = [];
+
+    function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const div = document.createElement('div');
+        div.className = 'task-item';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = task.text;
+        input.disabled = task.completed;
+        input.style.textDecoration = task.completed ? 'line-through' : 'none';
+
+        input.addEventListener('change', () => {
+          tasks[index].text = input.value;
+        });
+
+        const actions = document.createElement('div');
+        actions.className = 'task-actions';
+
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = task.completed ? 'Reabrir' : 'Completar';
+        completeBtn.onclick = () => {
+          tasks[index].completed = !tasks[index].completed;
+          renderTasks();
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Excluir';
+        deleteBtn.className = 'delete';
+        deleteBtn.onclick = () => {
+          tasks.splice(index, 1);
+          renderTasks();
+        };
+
+        actions.appendChild(completeBtn);
+        actions.appendChild(deleteBtn);
+
+        div.appendChild(input);
+        div.appendChild(actions);
+        taskList.appendChild(div);
+      });
+    }
+
+    function addTask() {
+      const input = document.getElementById('newTask');
+      const text = input.value.trim();
+      if (text) {
+        tasks.push({ text, completed: false });
+        input.value = '';
+        renderTasks();
+      }
+    }
+
+    function filterTasks() {
+      const filter = document.getElementById('filter').value;
+      let filteredTasks = [...tasks];
+      if (filter === 'completed') {
+        filteredTasks = tasks.filter(task => task.completed);
+      } else if (filter === 'pending') {
+        filteredTasks = tasks.filter(task => !task.completed);
+      }
+      renderFilteredTasks(filteredTasks);
+    }
+
+    function renderFilteredTasks(filteredTasks) {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      filteredTasks.forEach((task, index) => {
+        const div = document.createElement('div');
+        div.className = 'task-item';
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = task.text;
+        input.disabled = task.completed;
+        input.style.textDecoration = task.completed ? 'line-through' : 'none';
+
+        const actions = document.createElement('div');
+        actions.className = 'task-actions';
+
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = task.completed ? 'Reabrir' : 'Completar';
+        completeBtn.onclick = () => {
+          task.completed = !task.completed;
+          filterTasks();
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Excluir';
+        deleteBtn.className = 'delete';
+        deleteBtn.onclick = () => {
+          tasks = tasks.filter(t => t !== task);
+          filterTasks();
+        };
+
+        actions.appendChild(completeBtn);
+        actions.appendChild(deleteBtn);
+
+        div.appendChild(input);
+        div.appendChild(actions);
+        taskList.appendChild(div);
+      });
+    }
+
+    function sortTasks() {
+      const sort = document.getElementById('sort').value;
+      tasks.sort((a, b) => {
+        if (sort === 'asc') return a.text.localeCompare(b.text);
+        else return b.text.localeCompare(a.text);
+      });
+      renderTasks();
+    }
+
+    function logout() {
+      window.location.href = 'index.html';
+    }
+  </script></body>
+</html>   
