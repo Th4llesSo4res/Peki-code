@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <title>To-Do List Avançada</title>
+</head>
+<body class="todolist-body">
+  <header>
+    <h1>Minha To-Do List Avançada</h1>
+    <button onclick="logout()" style="background:#ef476f; padding:10px 20px; color:#fff; border:none; border-radius:5px; cursor:pointer;">Sair</button>
+  </header>
+
+  <div class="container">
+    <div class="filter-sort">
+      <select id="filter" onchange="filterTasks()">
+        <option value="all">Todas</option>
+        <option value="completed">Completas</option>
+        <option value="pending">Pendentes</option>
+      </select>
+      <select id="sort" onchange="sortTasks()">
+        <option value="asc">A-Z</option>
+        <option value="desc">Z-A</option>
+      </select>
+    </div>
+
+    <div class="add-task">
+      <input type="text" id="newTask" placeholder="Nova tarefa...">
+      <button onclick="addTask()">Adicionar</button>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+  </div>
+
+  <script src="scripts/tasks.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+/* ----- GERAL ----- */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+/* ----- LOGIN E CADASTRO ----- */
+.auth-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 30px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+  color: #006666;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3399aa;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background-color: #2a8191;
+}
+
+.auth-container .checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.auth-container .footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-container .footer a {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ----- TODOLIST ----- */
+.todolist-body {
+  background: #f5f7fb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+header {
+  background-color: #2b2d42;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header button {
+  background:#ef476f;
+  padding:10px 20px;
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.task-list {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item input[type="text"] {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.task-actions button {
+  margin-left: 5px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.task-actions button.delete {
+  background: #e63946;
+}
+
+.add-task {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.add-task button {
+  background: #38b000;
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.filter-sort {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+select {
+  padding: 0.5rem;
+  border-radius: 5px;
+}

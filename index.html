@@ -1,89 +1,26 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/style.css" />
   <title>Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 30px;
-      width: 300px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #006666;
-    }
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #3399aa;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2a8191;
-    }
-    .checkbox {
-      display: flex;
-      align-items: center;
-    }
-    .footer {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-    .footer a {
-      color: #0077cc;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
 </head>
-<body>
-  <div class="container">
+<body class="auth-body">
+  <div class="auth-container">
     <h2>Login</h2>
-    <input type="email" id="email" placeholder="contato@htmlecsspro.com" required>
-    <input type="password" id="senha" placeholder="1234" required>
+    <input type="email" id="email" placeholder="contato@htmlecsspro.com" required />
+    <input type="password" id="senha" placeholder="1234" required />
     <div class="checkbox">
-      <input type="checkbox" id="manter"> <label for="manter">Manter-me logado</label>
+      <input type="checkbox" id="manter" />
+      <label for="manter">Manter-me logado</label>
     </div>
-    <button onclick="login()">Logar</button>
+    <button onclick="handleLogin()">Logar</button>
     <div class="footer">
-      Ainda não tem conta? <a href="#" onclick="window.location.href='cadastro.html'">Cadastre-se</a>
+      Ainda não tem conta?
+      <a href="#" onclick="window.location.href='cadastro.html'">Cadastre-se</a>
     </div>
-  </div>  <script>
-    function login() {
-      const email = document.getElementById("email").value;
-      const senha = document.getElementById("senha").value;
-
-      // Aqui você pode adicionar validação real com backend futuramente
-      if (email && senha) {
-        window.location.href = "todolist.html";
-      } else {
-        alert("Por favor, preencha todos os campos.");
-      }
-    }
-  </script></body>
+  </div>
+  <script src="scripts/auth.js"></script>
+</body>
 </html>
