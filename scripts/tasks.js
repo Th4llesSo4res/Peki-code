@@ -3,18 +3,14 @@ let tasks = [];
 
 async function loadTasks() {
   const res = await fetch('http://localhost:8080/tasks', {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
+    headers: { 'Authorization': `Bearer ${token}` }
   });
 
-  if (!res.ok) {
-    alert('Erro ao carregar tarefas.');
-    return;
-  }
+  if (!res.ok) return alert('Erro ao carregar tarefas.');
 
   tasks = await res.json();
   renderTasks(tasks);
+  showWelcomeMessage();
 }
 
 function renderTasks(lista) {
@@ -25,9 +21,14 @@ function renderTasks(lista) {
     const div = document.createElement('div');
     div.className = 'task-item';
     div.innerHTML = `
-      <p><strong>${task.title}</strong> - ${task.completed ? '✅' : '❌'}</p>
+      <div>
+        <p><strong>${task.title}</strong> ${task.completed ? '✅' : '❌'}</p>
+        <p>${task.description || ''}</p>
+        <p><small>${task.date || ''}</small></p>
+      </div>
       <div class="task-actions">
         <button onclick="completeTask(${task.id})">Concluir</button>
+        <button onclick="showEditForm(${task.id})">Editar</button>
         <button class="delete" onclick="deleteTask(${task.id})">Excluir</button>
       </div>
     `;
@@ -37,40 +38,62 @@ function renderTasks(lista) {
 
 async function addTask() {
   const title = document.getElementById('newTask').value.trim();
+  const description = document.getElementById('newDescription').value.trim();
+  const date = document.getElementById('newDate').value;
+
   if (!title) return alert('Digite um título válido.');
 
-  const res = await fetch('http://localhost:8080/tasks', {
+  await fetch('http://localhost:8080/tasks', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    body: JSON.stringify({ title, description: '' })
+    body: JSON.stringify({ title, description, date })
   });
 
-  if (!res.ok) return alert('Erro ao adicionar tarefa.');
-
   document.getElementById('newTask').value = '';
+  document.getElementById('newDescription').value = '';
+  document.getElementById('newDate').value = '';
   loadTasks();
 }
 
 async function completeTask(id) {
-  const res = await fetch(`http://localhost:8080/tasks/${id}/complete`, {
+  await fetch(`http://localhost:8080/tasks/${id}/complete`, {
     method: 'PUT',
     headers: { 'Authorization': `Bearer ${token}` }
   });
-
-  if (!res.ok) return alert('Erro ao concluir tarefa.');
   loadTasks();
 }
 
 async function deleteTask(id) {
-  const res = await fetch(`http://localhost:8080/tasks/${id}`, {
+  await fetch(`http://localhost:8080/tasks/${id}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` }
   });
+  loadTasks();
+}
 
-  if (!res.ok) return alert('Erro ao excluir tarefa.');
+function showEditForm(id) {
+  const task = tasks.find(t => t.id === id);
+  const title = prompt('Novo título:', task.title);
+  const description = prompt('Nova descrição:', task.description || '');
+  const date = prompt('Nova data (yyyy-mm-dd):', task.date || '');
+
+  if (title !== null) updateTask(id, title, description, date);
+}
+
+async function updateTask(id, title, description, date) {
+  const res = await fetch(`http://localhost:8080/tasks/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, description, date })
+  });
+
+  if (!res.ok) return alert('Erro ao editar tarefa.');
   loadTasks();
 }
 
@@ -78,11 +101,8 @@ function filterTasks() {
   const filter = document.getElementById('filter').value;
   let filtered = tasks;
 
-  if (filter === 'completed') {
-    filtered = tasks.filter(t => t.completed);
-  } else if (filter === 'pending') {
-    filtered = tasks.filter(t => !t.completed);
-  }
+  if (filter === 'completed') filtered = tasks.filter(t => t.completed);
+  else if (filter === 'pending') filtered = tasks.filter(t => !t.completed);
 
   renderTasks(filtered);
 }
@@ -100,6 +120,11 @@ function sortTasks() {
 function logout() {
   localStorage.removeItem('token');
   window.location.href = 'index.html';
+}
+
+function showWelcomeMessage() {
+  const email = JSON.parse(atob(token.split('.')[1])).sub;
+  document.getElementById('welcome').innerText = `Bem-vindo! O que vamos planejar hoje?`;
 }
 
 loadTasks();

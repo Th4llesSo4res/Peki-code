@@ -1,16 +1,17 @@
 /* ----- GERAL ----- */
 body {
-  font-family: Arial, sans-serif;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-color: #f0f0f0;
   margin: 0;
 }
 
 /* ----- LOGIN E CADASTRO ----- */
-.auth-body {
+.auth-body{
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  
 }
 
 .auth-container {
@@ -106,11 +107,27 @@ header button {
 }
 
 .task-item {
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.task-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.task-item p {
+  margin: 0;
+  word-break: break-word; /* quebra palavras longas */
+  white-space: pre-wrap;
 }
 
 .task-item:last-child {
@@ -125,18 +142,35 @@ header button {
   border-radius: 5px;
 }
 
+.task-actions {
+  align-self: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+
 .task-actions button {
-  margin-left: 5px;
-  background: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 5px;
   padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
   cursor: pointer;
+  border: none;
+  color: white;
+  background: #0066cc;
+  white-space: nowrap;
 }
 
 .task-actions button.delete {
   background: #e63946;
+}
+
+.task-actions .edit {
+  background: #fca311;
+}
+
+.task-actions button:hover {
+  opacity: 0.85;
 }
 
 .add-task {
@@ -169,4 +203,43 @@ header button {
 select {
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+.welcome-message {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.task-item {
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.task-actions button {
+  margin: 0 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.task-actions .delete {
+  background: #ef233c;
+  color: white;
+}
+
+.task-actions button:hover {
+  opacity: 0.85;
 }

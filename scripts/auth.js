@@ -1,5 +1,6 @@
 const api = 'http://localhost:8080/auth';
 
+// Função de login
 async function handleLogin() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("senha").value;
@@ -15,18 +16,18 @@ async function handleLogin() {
     body: JSON.stringify({ email, password })
   });
 
-  const result = await res.text();
+  const token = await res.text();
 
-  if (res.ok && result.startsWith("Token gerado: ")) {
-    const token = result.replace("Token gerado: ", "").trim();
+  if (res.ok && !token.includes("Credenciais inválidas")) {
     localStorage.setItem("token", token);
     alert("Login realizado com sucesso!");
-    window.location.href = "home.html"; // redireciona após login
+    window.location.href = "home.html";
   } else {
     alert("Credenciais inválidas.");
   }
 }
 
+// Função de cadastro
 async function register() {
   const username = document.getElementById("nome").value;
   const email = document.getElementById("email").value;
@@ -46,22 +47,14 @@ async function register() {
   const res = await fetch(`${api}/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, email, password })
+    body: JSON.stringify({ name: username, email, password })
   });
 
   if (res.ok) {
-    alert('Usuário cadastrado com sucesso!');
-    window.location.href = 'index.html';
+    alert("Usuário cadastrado com sucesso!");
+    window.location.href = "index.html";
   } else {
-    alert('Erro ao cadastrar usuário.');
+    const erro = await res.text();
+    alert("Erro ao cadastrar: " + erro);
   }
-  function handleLogin() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("senha").value;
-
-  console.log(email, password);
-
-  login(email, password);
-}
-
 }
